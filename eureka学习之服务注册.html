@@ -1,0 +1,451 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>eureka学习之服务注册 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="eureka学习之获取注册信息.html" />
+    
+    
+    <link rel="prev" href="eureka学习之服务续约.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="eureka学习之InstanceInfo.html">
+            
+                <a href="eureka学习之InstanceInfo.html">
+            
+                    
+                    eureka学习之InstanceInfo
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="eureka学习之服务续约.html">
+            
+                <a href="eureka学习之服务续约.html">
+            
+                    
+                    eureka学习之服务续约
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4" data-path="eureka学习之服务注册.html">
+            
+                <a href="eureka学习之服务注册.html">
+            
+                    
+                    eureka学习之服务注册
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="eureka学习之获取注册信息.html">
+            
+                <a href="eureka学习之获取注册信息.html">
+            
+                    
+                    eureka学习之获取注册信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >eureka学习之服务注册</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h3 id="1&#x670D;&#x52A1;&#x6CE8;&#x518C;">1.&#x670D;&#x52A1;&#x6CE8;&#x518C;</h3>
+<p>EurekaHttpResponse&#x5B58;&#x50A8;eureka&#x6CE8;&#x518C;&#x7684;&#x76F8;&#x5173;&#x4FE1;&#x606F;</p>
+<p>statusCode &#x72B6;&#x6001;&#x7801;&#x4FE1;&#x606F;</p>
+<p>headers &#x5934;&#x90E8;&#x4FE1;&#x606F;</p>
+<p>location URI&#x5730;&#x5740;&#x4FE1;&#x606F;</p>
+<blockquote>
+<p><img src="C:\Users\kj00078\AppData\Roaming\Typora\typora-user-images\image-20210312110626805.png" alt="image-20210312110626805"></p>
+</blockquote>
+<p>&#x5728;eureka-client&#x5305;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x5230;DiscoveryClient&#x7C7B;&#x3002;DiscoveryClient&#x7528;&#x4E8E;&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x4E0E;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#xFF0C;DiscoverClient&#x7C7B;&#x7684;&#x7EE7;&#x627F;&#x5173;&#x7CFB;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="C:\Users\kj00078\Desktop\DiscoveryClient&#x7C7B;&#x5173;&#x7CFB;&#x56FE;.png" alt="DiscoveryClient&#x7C7B;&#x5173;&#x7CFB;&#x56FE;"></p>
+<p>DiscoveryClient&#x7C7B;&#x4E2D;&#x7684;register&#x662F;&#x7528;&#x6765;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x7684;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x901A;&#x8FC7;http&#x8BF7;&#x6C42;&#x5411;Eureka Server&#x6CE8;&#x518C;&#x3002;</p>
+<pre><code>/**
+     * Register with the eureka service by making the appropriate REST call.
+     */
+    boolean register() throws Throwable {
+        logger.info(PREFIX + &quot;{}: registering service...&quot;, appPathIdentifier);
+        //&#x8D1F;&#x8D23;&#x5B58;&#x653E;eureka&#x6CE8;&#x518C;&#x7684;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#xFF0C;&#x72B6;&#x6001;&#x7801;&#xFF0C;headers&#x5934;&#x90E8;&#x4FE1;&#x606F;&#xFF0C;uri&#x5730;&#x5740;
+        EurekaHttpResponse&lt;Void&gt; httpResponse;
+        try {
+            //&#x6B64;&#x5904;&#x8C03;&#x7528;&#x662F;eureka&#x6CE8;&#x518C;&#x7684;&#x5177;&#x4F53;&#x903B;&#x8F91;,AbstractJerseyEurekaHttpClient&#x7C7B;&#x4E2D;&#x5B9E;&#x73B0;&#x4E86;register&#x65B9;&#x6CD5;&#xFF0C;&#x5B9E;&#x73B0;&#x65B9;&#x6CD5;&#x4E2D;&#x662F;&#x4F7F;&#x7528;&#x7684;Jersey&#x6846;&#x67B6;&#x6765;&#x5B9E;&#x73B0;eureka&#x5BA2;               &#x6237;&#x7AEF;&#x4E0E;&#x670D;&#x52A1;&#x7AEF;&#x4E4B;&#x95F4;&#x7684;http&#x901A;&#x4FE1;,&#x4E5F;&#x53EF;&#x4EE5;&#x81EA;&#x5DF1;&#x5B9E;&#x73B0;EurekaHttpClient&#x4E2D;&#x7684;register&#x65B9;&#x6CD5;
+            httpResponse = eurekaTransport.registrationClient.register(instanceInfo);
+        } catch (Exception e) {
+            logger.warn(PREFIX + &quot;{} - registration failed {}&quot;, appPathIdentifier, e.getMessage(), e);
+            throw e;
+        }
+        if (logger.isInfoEnabled()) {
+            logger.info(PREFIX + &quot;{} - registration status: {}&quot;, appPathIdentifier, httpResponse.getStatusCode());
+        }
+        return httpResponse.getStatusCode() == Status.NO_CONTENT.getStatusCode();
+    }
+</code></pre><p><img src="C:\Users\kj00078\Desktop\EurekaHttpClient&#x7C7B;&#x56FE;.png" alt="EurekaHttpClient&#x7C7B;&#x56FE;"></p>
+<p>EurekaHttpClient&#x7C7B;&#x7EE7;&#x627F;&#x56FE;</p>
+<p>AbstractJerseyEurekaHttpClient&#x7C7B;&#x4E2D;&#x5B9E;&#x73B0;&#x7684;register&#x65B9;&#x6CD5;&#x5177;&#x4F53;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> EurekaHttpResponse&lt;Void&gt; <span class="hljs-title">register</span><span class="hljs-params">(InstanceInfo info)</span> </span>{
+        String urlPath = <span class="hljs-string">&quot;apps/&quot;</span> + info.getAppName();
+        ClientResponse response = <span class="hljs-keyword">null</span>;
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-comment">//&#x4F7F;&#x7528;jersey&#x6846;&#x67B6;&#x5B9E;&#x73B0;&#x5BA2;&#x6237;&#x7AEF;&#x4E0E;&#x670D;&#x52A1;&#x5668;&#x4E4B;&#x95F4;&#x7684;http&#x901A;&#x4FE1;</span>
+            Builder resourceBuilder = jerseyClient.resource(serviceUrl).path(urlPath).getRequestBuilder();
+            addExtraHeaders(resourceBuilder);
+            response = resourceBuilder
+                    .header(<span class="hljs-string">&quot;Accept-Encoding&quot;</span>, <span class="hljs-string">&quot;gzip&quot;</span>)
+                    .type(MediaType.APPLICATION_JSON_TYPE)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .post(ClientResponse.class, info);
+            <span class="hljs-keyword">return</span> anEurekaHttpResponse(response.getStatus()).headers(headersOf(response)).build();
+        } <span class="hljs-keyword">finally</span> {
+            <span class="hljs-keyword">if</span> (logger.isDebugEnabled()) {
+                logger.debug(<span class="hljs-string">&quot;Jersey HTTP POST {}/{} with instance {}; statusCode={}&quot;</span>, serviceUrl, urlPath, info.getId(),
+                        response == <span class="hljs-keyword">null</span> ? <span class="hljs-string">&quot;N/A&quot;</span> : response.getStatus());
+            }
+            <span class="hljs-keyword">if</span> (response != <span class="hljs-keyword">null</span>) {
+                response.close();
+            }
+        }
+    }
+</code></pre>
+<p>&#x5206;&#x6790;&#x5230;&#x8FD9;&#x91CC;&#xFF0C;&#x6211;&#x4EEC;&#x600E;&#x80FD;&#x770B;&#x5230;InstanceInfo&#x8FD9;&#x4E2A;&#x7C7B;&#x7684;&#x8EAB;&#x5F71;&#xFF0C;&#x5B83;&#x51FA;&#x73B0;&#x7684;&#x5982;&#x6B64;&#x9891;&#x7E41;&#xFF0C;&#x6B64;&#x7C7B;&#x5FC5;&#x5B9A;&#x4E0D;&#x662F;&#x788C;&#x788C;&#x65E0;&#x4E3A;&#x4E4B;&#x8F88;&#x3002;&#x8FD9;&#x4E2A;&#x7C7B;&#x5728;eureka&#x6CE8;&#x518C;&#x4E2D;&#x8D77;&#x5230;&#x7684;&#x4F5C;&#x7528;&#x975E;&#x5E38;&#x5173;&#x952E;&#xFF0C;&#x5B83;&#x662F;&#x4E00;&#x7CFB;&#x5217;&#x6CE8;&#x518C;&#x6570;&#x636E;&#x5B58;&#x653E;&#x7684;&#x5B9E;&#x4F53;&#x3002;&#x9650;&#x4E8E;&#x7BC7;&#x5E45;&#x6211;&#x4EEC;&#x5728;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x5177;&#x4F53;&#x8BB2;&#x89E3;&#x8FD9;&#x4E2A;&#x7C7B;&#x4E86;&#x3002;&#x6709;&#x5174;&#x8DA3;&#x7684;&#x540C;&#x5B66;&#x53EF;&#x4EE5;&#x5230;eureka&#x5B66;&#x4E60;&#x4E4B;InstanceInfo&#x53BB;&#x4E86;&#x89E3;&#x3002;</p>
+<p>&#x597D;&#x4E86;&#x6211;&#x4EEC;&#x5728;&#x56DE;&#x6765;&#x7EE7;&#x7EED;&#x5206;&#x6790;DiscoveryClient&#x7C7B;&#x91CC;&#x7684;register&#x65B9;&#x6CD5;&#xFF0C;&#x901A;&#x8FC7;&#x8FFD;&#x8E2A;&#x65B9;&#x6CD5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;InstanceInfoReplicator&#x7C7B;&#x91CC;&#x7684;run&#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x4E86;register&#x65B9;&#x6CD5;&#x3002;&#x901A;&#x8FC7;&#x7C7B;&#x63CF;&#x8FF0;&#xFF0C;A task for updating and replicating the local instanceinfo to the remote server.&#x8FD9;&#x4E2A;&#x7C7B;&#x662F;&#x8D1F;&#x8D23;&#x66F4;&#x65B0;&#x548C;&#x590D;&#x5236;&#x672C;&#x5730;eureka&#x76F8;&#x5173;&#x6570;&#x636E;&#x5230;&#x8FDC;&#x7A0B;server&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x3002;&#x4EE5;&#x4E0B;&#x662F;run&#x65B9;&#x6CD5;&#x8C03;&#x7528;register&#x65B9;&#x6CD5;&#x7684;&#x5177;&#x4F53;&#x4EE3;&#x7801;&#x3002;&#x800C;InstanceInfoReplicator&#x5B9E;&#x4F8B;&#x662F;&#x5728;DiscoveryClient&#x7684;&#x65B9;&#x6CD5;initScheduledTasks&#x4E2D;new&#x521B;&#x9020;&#x5BF9;&#x8C61;&#x7684;&#x3002;initScheduledTasks&#x65B9;&#x6CD5;&#x662F;&#x5728;eureka&#x5BA2;&#x6237;&#x7AEF;&#x7528;&#x6765;&#x521D;&#x59CB;&#x5316;&#x6240;&#x6709;&#x8C03;&#x5EA6;&#x4EFB;&#x52A1;&#x5BF9;&#x8C61;&#x7684;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">try</span> {
+            discoveryClient.refreshInstanceInfo();
+            <span class="hljs-comment">//&#x67E5;&#x8BE2;&#x662F;&#x5426;&#x548C;&#x670D;&#x52A1;&#x5668;&#x5B58;&#x50A8;&#x7684;&#x4FE1;&#x606F;&#x662F;&#x5426;&#x6709;&#x66F4;&#x65B0;</span>
+            Long dirtyTimestamp = instanceInfo.isDirtyWithTime();
+            <span class="hljs-comment">//dirtyTimestamp&#x5982;&#x679C;&#x4E0D;&#x4E3A;null&#x5219;&#x8C03;&#x7528;register()&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x6CE8;&#x518C;&#x52A8;&#x4F5C;</span>
+            <span class="hljs-keyword">if</span> (dirtyTimestamp != <span class="hljs-keyword">null</span>) {
+                discoveryClient.register();
+                instanceInfo.unsetIsDirty(dirtyTimestamp);
+            }
+        } <span class="hljs-keyword">catch</span> (Throwable t) {
+            logger.warn(<span class="hljs-string">&quot;There was a problem with the instance info replicator&quot;</span>, t);
+        } <span class="hljs-keyword">finally</span> {
+            Future next = scheduler.schedule(<span class="hljs-keyword">this</span>, replicationIntervalSeconds, TimeUnit.SECONDS);
+            scheduledPeriodicRef.set(next);
+        }
+    }
+</code></pre>
+<p>&#x8BF4;&#x5B8C;eureka&#x5BA2;&#x6237;&#x7AEF;&#x662F;&#x600E;&#x4E48;&#x8FDB;&#x884C;&#x6CE8;&#x518C;&#x7684;&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E00;&#x770B;eureka&#x670D;&#x52A1;&#x7AEF;&#x662F;&#x600E;&#x4E48;&#x8FDB;&#x884C;&#x76F8;&#x5173;&#x6CE8;&#x518C;&#x7684;&#x3002;&#x6E90;&#x7801;eureka-core&#x5305;&#x4E0B;&#x7684;EurekaBootStrap&#x7C7B;&#x7EE7;&#x627F;&#x4E86;ServletContextListener&#x3002;EurekaBootStrap&#x5728;&#x5BB9;&#x5668;&#x542F;&#x52A8;&#x65F6;&#x8FDB;&#x884C;&#x76F8;&#x5173;&#x521D;&#x59CB;&#x5316;&#x3002;eureka&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x76F8;&#x5173;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E5F;&#x662F;&#x5728;EurekaBootStrap&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#x7684;&#x3002;</p>
+<p>&#x5728;&#x521D;&#x59CB;&#x5316;eureka&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x4E0B;&#x6587;&#x7684;&#x65B9;&#x6CD5;initEurekaServerContext&#x4E2D;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;PeerAwareInstanceRegistry&#x8FD9;&#x4E48;&#x4E00;&#x4E2A;&#x7C7B;&#xFF0C;&#x5355;&#x4ECE;&#x540D;&#x5B57;&#x4E0A;&#x770B;&#x8FD9;&#x4E2A;&#x7C7B;&#x5E94;&#x8BE5;&#x662F;&#x548C;&#x6CE8;&#x518C;&#x5B9E;&#x4F8B;&#x6709;&#x5173;&#x7684;&#x4E00;&#x4E2A;&#x7C7B;&#x3002;&#x8FDB;&#x5230;&#x8FD9;&#x4E2A;&#x7C7B;&#x91CC;&#x679C;&#x7136;&#x6709;register&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x3002;&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x8BA9;&#x6211;&#x4EEC;&#x770B;&#x4E0B;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x3002;&#x5728;&#x62BD;&#x8C61;&#x7C7B;AbstractInstanceRegistry&#x91CC;&#x6709;register&#x65B9;&#x6CD5;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">register</span><span class="hljs-params">(InstanceInfo registrant, <span class="hljs-keyword">int</span> leaseDuration, <span class="hljs-keyword">boolean</span> isReplication)</span> </span>{
+        read.lock();
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-comment">//&#x9996;&#x5148;&#x901A;&#x8FC7;app&#x5E94;&#x7528;&#x540D;&#x83B7;&#x53D6;&#x5BF9;&#x5E94;&#x7684;&#x6CE8;&#x518C;&#x4FE1;&#x606F;</span>
+            Map&lt;String, Lease&lt;InstanceInfo&gt;&gt; gMap = registry.get(registrant.getAppName());
+            <span class="hljs-comment">//&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x6570;&#x52A0;1&#xFF0C;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x6570;&#x662F;&#x7528;AtomicLong&#x6765;&#x5B9E;&#x73B0;&#x7684;&#x907F;&#x514D;&#x591A;&#x7EBF;&#x7A0B;&#x51FA;&#x73B0;&#x6570;&#x636E;&#x4E0D;&#x540C;&#x6B65;&#x95EE;&#x9898;</span>
+            REGISTER.increment(isReplication);
+            <span class="hljs-keyword">if</span> (gMap == <span class="hljs-keyword">null</span>) {<span class="hljs-comment">//&#x5982;&#x679C;&#x6CE8;&#x518C;&#x4FE1;&#x606F;&#x5728;&#x539F;&#x6709;&#x7684;&#x6CE8;&#x518C;&#x6570;&#x636E;&#x4E2D;&#x6CA1;&#x6709;&#x5219;&#x5C06;&#x6CE8;&#x518C;&#x4FE1;&#x5FC3;&#x5B58;&#x5165;ConcurrentHashMap&#x6570;&#x636E;&#x4E2D;</span>
+                <span class="hljs-keyword">final</span> ConcurrentHashMap&lt;String, Lease&lt;InstanceInfo&gt;&gt; gNewMap = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;String, Lease&lt;InstanceInfo&gt;&gt;();
+                gMap = registry.putIfAbsent(registrant.getAppName(), gNewMap);
+                <span class="hljs-keyword">if</span> (gMap == <span class="hljs-keyword">null</span>) {
+                    gMap = gNewMap;
+                }
+            }
+            Lease&lt;InstanceInfo&gt; existingLease = gMap.get(registrant.getId());
+            <span class="hljs-comment">// Retain the last dirty timestamp without overwriting it, if there is already a lease</span>
+            <span class="hljs-keyword">if</span> (existingLease != <span class="hljs-keyword">null</span> &amp;&amp; (existingLease.getHolder() != <span class="hljs-keyword">null</span>)) {
+                Long existingLastDirtyTimestamp = existingLease.getHolder().getLastDirtyTimestamp();
+                Long registrationLastDirtyTimestamp = registrant.getLastDirtyTimestamp();
+                logger.debug(<span class="hljs-string">&quot;Existing lease found (existing={}, provided={}&quot;</span>, existingLastDirtyTimestamp, registrationLastDirtyTimestamp);
+
+                <span class="hljs-comment">// this is a &gt; instead of a &gt;= because if the timestamps are equal, we still take the remote transmitted</span>
+                <span class="hljs-comment">// InstanceInfo instead of the server local copy.</span>
+                <span class="hljs-comment">//&#x5982;&#x679C;existingLastDirtyTimestamp &gt; registrationLastDirtyTimestamp&#x6CE8;&#x518C;&#x4FE1;&#x606F;&#x6CA1;&#x6709;&#x66F4;&#x65B0;&#x4FE1;&#x606F;&#x5C31;&#x83B7;&#x53D6;&#x539F;&#x6709;&#x7684;&#x6570;&#x636E;</span>
+                <span class="hljs-keyword">if</span> (existingLastDirtyTimestamp &gt; registrationLastDirtyTimestamp) {
+                    logger.warn(<span class="hljs-string">&quot;There is an existing lease and the existing lease&apos;s dirty timestamp {} is greater&quot;</span> +
+                            <span class="hljs-string">&quot; than the one that is being registered {}&quot;</span>, existingLastDirtyTimestamp, registrationLastDirtyTimestamp);
+                    logger.warn(<span class="hljs-string">&quot;Using the existing instanceInfo instead of the new instanceInfo as the registrant&quot;</span>);
+                    registrant = existingLease.getHolder();
+                }
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-comment">//&#x5982;&#x679C;&#x6CE8;&#x518C;&#x4FE1;&#x606F;&#x662F;&#x4EE5;&#x524D;&#x4E0D;&#x5B58;&#x7684;&#x7684;&#xFF0C;&#x5C31;&#x66F4;&#x65B0;&#x6CE8;&#x518C;&#x4FE1;&#x606F;</span>
+                <span class="hljs-comment">// The lease does not exist and hence it is a new registration</span>
+                <span class="hljs-keyword">synchronized</span> (lock) {
+                    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.expectedNumberOfClientsSendingRenews &gt; <span class="hljs-number">0</span>) {
+                        <span class="hljs-comment">// Since the client wants to register it, increase the number of clients sending renews</span>
+                        <span class="hljs-keyword">this</span>.expectedNumberOfClientsSendingRenews = <span class="hljs-keyword">this</span>.expectedNumberOfClientsSendingRenews + <span class="hljs-number">1</span>;
+                        updateRenewsPerMinThreshold();
+                    }
+                }
+                logger.debug(<span class="hljs-string">&quot;No previous lease information found; it is new registration&quot;</span>);
+            }
+            Lease&lt;InstanceInfo&gt; lease = <span class="hljs-keyword">new</span> Lease&lt;InstanceInfo&gt;(registrant, leaseDuration);
+            <span class="hljs-keyword">if</span> (existingLease != <span class="hljs-keyword">null</span>) {
+                lease.setServiceUpTimestamp(existingLease.getServiceUpTimestamp());
+            }
+            gMap.put(registrant.getId(), lease);
+            <span class="hljs-comment">//&#x5C06;&#x6CE8;&#x518C;&#x670D;&#x52A1;&#x540D;&#x79F0;&#x548C;Id&#x5B58;&#x50A8;&#x5230;&#x961F;&#x5217;&#x4E2D;</span>
+            recentRegisteredQueue.add(<span class="hljs-keyword">new</span> Pair&lt;Long, String&gt;(
+                    System.currentTimeMillis(),
+                    registrant.getAppName() + <span class="hljs-string">&quot;(&quot;</span> + registrant.getId() + <span class="hljs-string">&quot;)&quot;</span>));
+            <span class="hljs-comment">// This is where the initial state transfer of overridden status happens</span>
+            <span class="hljs-keyword">if</span> (!InstanceStatus.UNKNOWN.equals(registrant.getOverriddenStatus())) {
+                logger.debug(<span class="hljs-string">&quot;Found overridden status {} for instance {}. Checking to see if needs to be add to the &quot;</span>
+                                + <span class="hljs-string">&quot;overrides&quot;</span>, registrant.getOverriddenStatus(), registrant.getId());
+                <span class="hljs-keyword">if</span> (!overriddenInstanceStatusMap.containsKey(registrant.getId())) {
+                    logger.info(<span class="hljs-string">&quot;Not found overridden id {} and hence adding it&quot;</span>, registrant.getId());
+                    overriddenInstanceStatusMap.put(registrant.getId(), registrant.getOverriddenStatus());
+                }
+            }
+            InstanceStatus overriddenStatusFromMap = overriddenInstanceStatusMap.get(registrant.getId());
+            <span class="hljs-keyword">if</span> (overriddenStatusFromMap != <span class="hljs-keyword">null</span>) {
+                logger.info(<span class="hljs-string">&quot;Storing overridden status {} from map&quot;</span>, overriddenStatusFromMap);
+                registrant.setOverriddenStatus(overriddenStatusFromMap);
+            }
+
+            <span class="hljs-comment">// Set the status based on the overridden status rules</span>
+            InstanceStatus overriddenInstanceStatus = getOverriddenInstanceStatus(registrant, existingLease, isReplication);
+            registrant.setStatusWithoutDirty(overriddenInstanceStatus);
+
+            <span class="hljs-comment">// If the lease is registered with UP status, set lease service up timestamp</span>
+            <span class="hljs-keyword">if</span> (InstanceStatus.UP.equals(registrant.getStatus())) {
+                lease.serviceUp();
+            }
+            registrant.setActionType(ActionType.ADDED);
+            <span class="hljs-comment">//&#x5C06;&#x4FE1;&#x606F;&#x5B58;&#x5165;&#x6700;&#x8FD1;&#x6539;&#x53D8;&#x961F;&#x5217;&#x4E2D;</span>
+            recentlyChangedQueue.add(<span class="hljs-keyword">new</span> RecentlyChangedItem(lease));
+            registrant.setLastUpdatedTimestamp();
+            invalidateCache(registrant.getAppName(), registrant.getVIPAddress(), registrant.getSecureVipAddress());
+            logger.info(<span class="hljs-string">&quot;Registered instance {}/{} with status {} (replication={})&quot;</span>,
+                    registrant.getAppName(), registrant.getId(), registrant.getStatus(), isReplication);
+        } <span class="hljs-keyword">finally</span> {
+            read.unlock();
+        }
+    }
+</code></pre>
+<p>PeerAwareInstanceRegistry&#x7684;register()&#x65B9;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x4EE3;&#x7801;&#x8FFD;&#x8E2A;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6700;&#x7EC8;&#x662F;&#x88AB;ApplicationResource&#x7C7B;&#x7684;addInstance&#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x3002;ApplicationResource&#x7C7B;&#x662F;&#x4E00;&#x4E2A;Http API&#x63A5;&#x53E3;&#x3002;&#x6B64;&#x7C7B;&#x91CC;&#x7684;&#x65B9;&#x6CD5;&#x901A;&#x8FC7;Http&#x63A5;&#x53E3;&#x66B4;&#x9732;&#x51FA;&#x6765;&#x4F9B;eureka client&#x8C03;&#x7528;&#x3002;&#x800C;addInstance&#x65B9;&#x6CD5;&#x662F;&#x7528;&#x6765;&#x6CE8;&#x518C;eureka&#x670D;&#x52A1;&#x7684;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="eureka学习之服务续约.html" class="navigation navigation-prev " aria-label="Previous page: eureka学习之服务续约">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="eureka学习之获取注册信息.html" class="navigation navigation-next " aria-label="Next page: eureka学习之获取注册信息">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"eureka学习之服务注册","level":"1.4","depth":1,"next":{"title":"eureka学习之获取注册信息","level":"1.5","depth":1,"path":"eureka学习之获取注册信息.md","ref":"eureka学习之获取注册信息.md","articles":[]},"previous":{"title":"eureka学习之服务续约","level":"1.3","depth":1,"path":"eureka学习之服务续约.md","ref":"eureka学习之服务续约.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"eureka学习之服务注册.md","mtime":"2021-03-16T07:04:36.030Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-04-14T03:19:53.778Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
